@@ -3,7 +3,6 @@
 .settings
 *.log
 *.pyc
-*.py~
 *.pyo
 *.swp
 *.hi
