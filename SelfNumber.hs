@@ -1,6 +1,11 @@
 import Data.Char
-strSum :: String -> Int
-strSum "" = 0
-strSum str = digitToInt(head str) + strSum (tail str)
+import Data.Set
 
-main = do print $ strSum "123"
+generated n = n + sum([digitToInt x | x <- show(n)])
+
+self_numbers xs = toAscList result
+    where result = difference (fromDistinctAscList xs) (fromDistinctAscList [generated(x) | x <- xs])
+
+main = do 
+    num <- getLine
+    print $ sum $ self_numbers [1..(read(num)::Int)] 
