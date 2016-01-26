@@ -1,22 +1,40 @@
 import Text.Regex
 import Text.Regex.Posix
 
+reSlump = makeRegex "([D|E]F+)+G"::Regex
+reSlimp = makeRegex "AH|A([D|E]F+)+GC|AB(.+)C"::Regex
 
-reSlump = makeRegex "([D|E]F+G*)+G"::Regex
 testCaseSlumps = ["DFG", "EFG", "DFFFFFG", "DFDFDFDFG", "DFEFFFFFG"]
 testCaseNotSlumps = ["DFEFF", "EFAHG", "DEFG", "DG", "EFFFFDG"]
-testSlimps = ["AH", "ABAHC", "ABABAHCC", "ADFGC", "ADFFFFGC", "ABAEFGCC", "ADFDFGC"]
-testNotSlimps = ["ABC", "ABAH", "DFGC", "ABABAHC", "SLIMP", "ADGC"]
-testSlurpys = ["AHDFG", "ADFGCDFFFFFG", "ABAEFGCCDFEFFFFFG"]
-testNotSlurpys = ["AHDFGA", "DFGAH", "ABABCC"]
+testCaseSlimps = ["AH", "ABAHC", "ABABAHCC", "ADFGC", "ADFFFFGC", "ABAEFGCC", "ADFDFGC"]
+testCaseNotSlimps = ["ABC", "ABAH", "DFGC", "ABABAHC", "SLIMP", "ADGC"]
+testCaseSlurpys = ["AHDFG", "ADFGCDFFFFFG", "ABAEFGCCDFEFFFFFG"]
+testCaseNotSlurpys = ["AHDFGA", "DFGAH", "ABABCC"]
 
-unwrap (Just (a,b,c,d)) = b
+isMatched (Just (a,b,c,d)) = (a == "" && b /= "")
+isMatched Nothing = False
 
-testSlump testCase = unwrap result
-    where result = matchRegexAll (makeRegex "DFG"::Regex) "DFG"
+isFullMatched (Just (a,b,c,d)) = (a == "" && b /= "" && c == "")
+isFullMatched Nothing = False
 
---testSlump testCase = testCase == (match reSlump testCase::String)
---testNoSlump testCase = not $ testSlump testCase
+getRecursiveSlimp (Just (a,b,c,d)) = d !! 1
+getRecursiveSlimp Nothing = ""
 
-main = do print $ testSlump "DFG"
+restTestCase (Just (a,b,c,d)) = c
+restTestCase Nothing = ""
+
+test regex testCase = if matchedGroup /= "" then test regex matchedGroup else isMatched result
+	where
+		result = matchRegexAll regex testCase
+		matchedGroup = getRecursiveSlimp result
+
+testSlurpy testCase = if isSlimp then isSlump else False
+	where
+		resultSlimp = matchRegexAll reSlimp testCase
+		isSlimp = isMatched resultSlimp
+		isSlump = isFullMatched $ matchRegexAll reSlump (restTestCase resultSlimp)
+
+		
+--main = do print (map (test reSlimp) testCaseSlimps)
+main = do print (map testSlurpy testCaseSlurpys)
 
