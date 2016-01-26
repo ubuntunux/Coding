@@ -34,7 +34,15 @@ testSlurpy testCase = if isSlimp then isSlump else False
 		isSlimp = isMatched resultSlimp
 		isSlump = isFullMatched $ matchRegexAll reSlump (restTestCase resultSlimp)
 
-		
+
 --main = do print (map (test reSlimp) testCaseSlimps)
 main = do print (map testSlurpy testCaseSlurpys)
+
+n = input("input test count : ")
+	testCases = [input("Test case " + str(i+1) + " : ").upper() for i in range(int(n))]
+	print("-"*50)
+	print("SLURPYS OUTPUT")
+	for testCase in testCases:
+		print("YES" if testSlurpy(testCase) else "NO")
+	print("END OF OUTPUT")
 
