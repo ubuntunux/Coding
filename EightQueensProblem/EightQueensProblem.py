@@ -1,28 +1,30 @@
-n=0
-size = 8
-full = (2**size)-1
-def bitToStr(num):
-	s = str(bin(num))[2:]
-	return (size - len(s)) * "0" + s
-	
-def queens(parentMask, lMask, rMask, depth, result):
-	mask = full & (parentMask | lMask | rMask)
-	for i in range(size):
-		q = 1 << i
-		# safe
-		if q & mask == 0:
-			nextMask = parentMask | q
-			nextlMask = full & ((lMask | q) << 1)
-			nextrMask = full & ((rMask | q) >> 1)
-			#print(str(depth) + " " + bitToStr(q) + " & " + bitToStr(mask) + " >> " +bitToStr(nextMask))
+SIZE = 8
+FULL_BIT_FLAG = (2**SIZE) - 1 # 8bit example => 11111111
 
-			if nextMask == full:
-				print("\n".join(result+[bitToStr(q)]) + "\n")
-				global n
-				n+=1
-				return
-			else:
-				queens(nextMask, nextlMask, nextrMask, depth+1, result+[bitToStr(q)])
-queens(0, 0, 0, 0, [])
-print(n)
-		
+def queens(accMask, leftMask, rightMask, acc_result, total_result):
+    mask = FULL_BIT_FLAG & (accMask | leftMask | rightMask)
+    for i in range(SIZE):
+        q = 1 << i
+        # safe
+        if q & mask == 0:
+            nextAccMask = accMask | q
+            nextlLeftMask = (leftMask | q) << 1
+            nextrRightMask = (rightMask | q) >> 1
+            result = acc_result + [q]
+            # problem solved
+            if nextAccMask == FULL_BIT_FLAG:
+                total_result.append(result)
+                return
+            else:
+                queens(nextAccMask, nextlLeftMask, nextrRightMask, result, total_result)
+    return total_result
+
+# problem resolve    
+final_result = queens(0, 0, 0, [], [])
+
+# show
+for result in final_result:
+    # number to bit flag string
+    print("\n".join(["{0:b}".format(num).zfill(SIZE) for num in result]) + "\n")
+        
+print("Total answer count : %d" % len(final_result))
