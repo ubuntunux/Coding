@@ -3,7 +3,6 @@ def balance(weights, left, right):
     # find closed number with weight
     closedValue = min([(999, 0)] + [(abs(weight-x), x) for x in weights])[1]
     weights.remove(closedValue)
-    #print("left, right, weight, closedValue", left, right, weight, closedValue)
     if left > right:
         left += min(weight, closedValue)
         right += max(weight, closedValue)
