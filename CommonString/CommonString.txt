@@ -1,3 +1,5 @@
+출처 : http://codingdojang.com/scode/527
+
 가장 긴 공통의 부분문자열 구하기
 
 Lv. 3
