@@ -7,6 +7,15 @@ def checkNode(datas, x, y):
         coord = (x + pattern[0], y + pattern[1])
         if (0 <= coord[1] < len(datas)) and (0 <= coord[0] < len(datas[coord[1]])):
             data = datas[coord[1]][coord[0]]
+            #### DEBUG START
+            print("")
+            datas[y][x] = "*"
+            datas[coord[1]][coord[0]] = "?"
+            for line in datas:
+                print("".join(line))
+            datas[y][x] = checkedFlag
+            datas[coord[1]][coord[0]] = checkedFlag
+            #### END OF DEBUG
             if data != checkedFlag:                
                 if data == ">": 
                     print("Found '>' at", coord)
@@ -29,8 +38,10 @@ def isPossible(data):
                 sX, sY = x, y                    
     if not checkNode(datas, sX, sY):
         print("Not found.")
-    
-# Run!!
+        
+#-------------------#
+# Test
+#-------------------#
 data1="""<     >"""
 
 data2="""########
@@ -50,6 +61,21 @@ data3="""#######
 #   #>#
 #######"""
 
+data4="""<   #   >"""
+
+data5 = """########
+#<     #
+#     ##
+#    #>#
+########"""
+
+data6 = """#< #  #
+#  #  #
+#  # >#"""
+
 isPossible(data1)
 isPossible(data2)
 isPossible(data3)
+isPossible(data4)
+isPossible(data5)
+isPossible(data6)
