@@ -1,8 +1,10 @@
-[¹®Á¦]
+http://codingdojang.com/scode/350
+
+[ë¬¸ì œ]
 
 If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
 Find the sum of all the multiples of 3 or 5 below 1000.
-[¹ø¿ª]
+[ë²ˆì—­]
 
-10¹Ì¸¸ÀÇ ÀÚ¿¬¼ö¿¡¼­ 3°ú 5ÀÇ ¹è¼ö¸¦ ±¸ÇÏ¸é 3,5,6,9ÀÌ´Ù. ÀÌµéÀÇ ÃÑÇÕÀº 23ÀÌ´Ù.
-1000¹Ì¸¸ÀÇ ÀÚ¿¬¼ö¿¡¼­ 3,5ÀÇ ¹è¼öÀÇ ÃÑÇÕÀ» ±¸ÇÏ¶ó.
+10ë¯¸ë§Œì˜ ìì—°ìˆ˜ì—ì„œ 3ê³¼ 5ì˜ ë°°ìˆ˜ë¥¼ êµ¬í•˜ë©´ 3,5,6,9ì´ë‹¤. ì´ë“¤ì˜ ì´í•©ì€ 23ì´ë‹¤.
+1000ë¯¸ë§Œì˜ ìì—°ìˆ˜ì—ì„œ 3,5ì˜ ë°°ìˆ˜ì˜ ì´í•©ì„ êµ¬í•˜ë¼.
