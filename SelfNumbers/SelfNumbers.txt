@@ -1,3 +1,5 @@
+출처 : http://codingdojang.com/scode/365
+
 어떤 자연수 n이 있을 때, d(n)을 n의 각 자릿수 숫자들과 n 자신을 더한 숫자라고 정의하자.
 
 예를 들어
