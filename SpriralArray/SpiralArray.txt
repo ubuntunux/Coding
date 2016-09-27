@@ -1,3 +1,5 @@
+출처 : http://codingdojang.com/scode/266
+
 문제는 다음과 같다:
 
 6 6
