@@ -1,5 +1,7 @@
 import os, glob, collections
 
+f = open("README.md","w")
+
 ignores = (".git", "__pycache__", ".ropeproject","src")
 
 languages = collections.OrderedDict({
@@ -20,19 +22,25 @@ for lang in languages:
 index = 1
 for folder in os.listdir():
     if os.path.isdir(folder) and folder not in ignores:
-        print(index, folder)
+        print(index, folder, file=f)
         index += 1
         for lang in languages:
             files = list(glob.glob(os.path.join(folder, languages[lang])))
             numFiles = len(files)
             filenames = ", ".join([os.path.split(filename)[1] for filename in files])            
-            print("\t%s(%d) : %s" % (lang, numFiles, filenames))
+            print("\t%s(%d) : %s" % (lang, numFiles, filenames), file=f)
             totalResolve[lang] += numFiles
-        print("")
+        print("", file=f)
         
-print("="*40)
-print("Total resolved info")
-print("="*40)
+print("="*40, file=f)
+print("Total resolved info", file=f)
+print("="*40, file=f)
         
 for lang in languages:
-    print("\t%s : %d solved" % (lang, totalResolve[lang]))
+    print("\t%s : %d solved" % (lang, totalResolve[lang]), file=f)
+    
+f.close()
+
+f = open("README.md","r")
+print(f.read())
+f.close()
