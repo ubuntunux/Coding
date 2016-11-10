@@ -20,7 +20,9 @@ for lang in languages:
     totalResolve[lang] = 0
 
 index = 1
-for folder in os.listdir():
+listDir = list(os.listdir())
+listDir.sort()
+for folder in listDir:
     if os.path.isdir(folder) and folder not in ignores:
         print("*", index, folder, file=f)
         index += 1
@@ -33,11 +35,11 @@ for folder in os.listdir():
         print("", file=f)
         
 print("-"*40, file=f)
-print("* Total resolved info", file=f)
+print("Total resolved info", file=f)
 print("-"*40, file=f)
         
 for lang in languages:
-    print("\t* %s : %d solved" % (lang, totalResolve[lang]), file=f)
+    print("\t%s : %d solved" % (lang, totalResolve[lang]), file=f)
     
 f.close()
 
