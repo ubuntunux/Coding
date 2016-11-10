@@ -22,22 +22,22 @@ for lang in languages:
 index = 1
 for folder in os.listdir():
     if os.path.isdir(folder) and folder not in ignores:
-        print(index, folder, file=f)
+        print("*", index, folder, file=f)
         index += 1
         for lang in languages:
             files = list(glob.glob(os.path.join(folder, languages[lang])))
             numFiles = len(files)
             filenames = ", ".join([os.path.split(filename)[1] for filename in files])            
-            print("\t%s(%d) : %s" % (lang, numFiles, filenames), file=f)
+            print("** %s(%d) : %s" % (lang, numFiles, filenames), file=f)
             totalResolve[lang] += numFiles
         print("", file=f)
         
-print("="*40, file=f)
-print("Total resolved info", file=f)
-print("="*40, file=f)
+print("-"*40, file=f)
+print("* Total resolved info", file=f)
+print("-"*40, file=f)
         
 for lang in languages:
-    print("\t%s : %d solved" % (lang, totalResolve[lang]), file=f)
+    print("** %s : %d solved" % (lang, totalResolve[lang]), file=f)
     
 f.close()
 
