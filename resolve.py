@@ -28,7 +28,7 @@ for folder in os.listdir():
             files = list(glob.glob(os.path.join(folder, languages[lang])))
             numFiles = len(files)
             filenames = ", ".join([os.path.split(filename)[1] for filename in files])            
-            print("** %s(%d) : %s" % (lang, numFiles, filenames), file=f)
+            print("\t* %s(%d) : %s" % (lang, numFiles, filenames), file=f)
             totalResolve[lang] += numFiles
         print("", file=f)
         
@@ -37,7 +37,7 @@ print("* Total resolved info", file=f)
 print("-"*40, file=f)
         
 for lang in languages:
-    print("** %s : %d solved" % (lang, totalResolve[lang]), file=f)
+    print("\t* %s : %d solved" % (lang, totalResolve[lang]), file=f)
     
 f.close()
 
