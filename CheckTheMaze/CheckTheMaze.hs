@@ -6,7 +6,7 @@ data1 = lines "<     >"
 data2 = lines
     "########\n\
     \#<     #\n\
-    \#> ##  #\n\
+    \#  ##  #\n\
     \#  ##  #\n\
     \#     >#\n\
     \########"
@@ -35,51 +35,54 @@ data6 = lines
     "#< #  #\n\
     \#  #  #\n\
     \#  # >#"
-    
+
 startPoint = '<'
 endPoint = '>'
-checkedList = [()]
+blockPoint = '#'
 checkPattern = [(0, -1), (-1, 0), (1, 0), (0, 1)]
-
-getEnableCheckPoint::(Foldable t, Foldable t1) => [t1 a] -> (Int, Int) -> t (Int, Int) -> [(Int, Int)]
-getEnableCheckPoint datas curPoint checkedList =
-    [(sumX, sumY) | (x,y) <- checkPattern, 
-        let sumX = (x + fst curPoint)
-            sumY = (y + snd curPoint),
-        not (elem (sumX, sumY) checkedList) && sumY >= 0,
-        sumY < length (datas) && sumX >= 0,
-        sumX < length (datas !! sumY)]
         
-getEnableCheckPoint' datas curPoint checkedList = do
+getEnableCheckPoint datas (cX, cY) checkedList = do
     (x,y) <- checkPattern
     let 
-        sumX = (x + fst curPoint)
-        sumY = (y + snd curPoint)
-    guard (not (elem (sumX, sumY) checkedList) && sumY >= 0)
-    guard (sumY < length (datas) && sumX >= 0)
-    guard (sumX < length (datas !! sumY))
+        sumX = (x + cX)
+        sumY = (y + cY)
+        numLines = length datas
+        character = (datas !! sumY) !! sumX
+    guard (
+        cY >=0 && cY < numLines && cX >= 0 && cX < length (datas !! cY) &&
+        not (elem (sumX, sumY) checkedList) &&
+        sumY >= 0 && sumY < numLines &&
+        sumX >= 0 && sumX < length (datas !! sumY) &&
+        character /= startPoint && character /= blockPoint
+        )
     return (sumX, sumY)
 
-findStartPoint'::[String] -> Int -> Maybe (Int, Int)
-findStartPoint' datas num
+findStartPoint datas num
     | index /= Nothing = Just (num, n)
     | length datas <= num = Nothing
-    | otherwise = findStartPoint' datas (num + 1)
+    | otherwise = findStartPoint datas (num + 1)
     where
         index = elemIndex startPoint (datas !! num)
         Just n = index
+    
+findEndPoint datas (x,y) checkedList = result
+    where
+        patterns = getEnableCheckPoint datas (x,y) checkedList
+        isEndPoint datas (x, y) = (datas !! y) !! x == endPoint
+        result =
+            foldr
+                (\(x, y) acc ->
+                    if isEndPoint datas (x, y)
+                    then Just (x, y)
+                    else case acc of
+                        Nothing -> findEndPoint datas (x,y) (patterns ++ checkedList)
+                        otherwise -> acc)
+                Nothing
+                patterns
         
-findStartPoint datas = findStartPoint' datas 0
-
-
-isEndPoint datas (x,y) = (datas !! y) !! x == '>'
-
-
-findEndPoint' datas curPoint@(x,y) checkedList =  
-    let patterns = getEnableCheckPoint datas curPoint checkedList
-        (results, points) = foldr (\(x, y) (accA, accB) ->
-            let result = isEndPoint datas (x, y)
-            in (result:accA, (x, y):accB)) ([],[]) patterns
-        result = elemIndex True results
-        Just index = result
-    in if result /= Nothing then show (points !! index) else concat (map (\nextPoint->findEndPoint' datas nextPoint (patterns ++ checkedList)) patterns)
+checkTheMaze =
+    fmap
+        (\maze -> do
+            startPoint <- findStartPoint maze 0
+            findEndPoint maze startPoint [])
+        [data1, data2, data3, data4, data5, data6]
