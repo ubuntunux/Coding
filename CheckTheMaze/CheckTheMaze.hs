@@ -1,6 +1,6 @@
 import Data.List
 import Control.Monad
-
+{-
 data1 = lines "<     >"
 
 data2 = lines
@@ -35,6 +35,15 @@ data6 = lines
     "#< #  #\n\
     \#  #  #\n\
     \#  # >#"
+-}
+
+data1="<     >"
+data2="########\n#<     #\n#  ##  #\n#  ##  #\n#     >#\n########"
+data3="#######\n#<    #\n##### #\n#     #\n# #####\n# #   #\n# # # #\n#   #>#\n#######"
+data4="<   #   >"
+data5="########\n#<     #\n#     ##\n#    #>#\n########"
+data6="#< #  #\n#  #  #\n#  # >#"
+
 
 startPoint = '<'
 endPoint = '>'
@@ -82,7 +91,8 @@ findEndPoint datas (x,y) checkedList = result
         
 checkTheMaze =
     fmap
-        (\maze -> do
+        (\mazeData -> do
+            let maze = lines mazeData
             startPoint <- findStartPoint maze 0
             findEndPoint maze startPoint [])
         [data1, data2, data3, data4, data5, data6]
