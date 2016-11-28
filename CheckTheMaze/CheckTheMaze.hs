@@ -1,9 +1,9 @@
 import Data.List
 import Control.Monad
-{-
-data1 = lines "<     >"
 
-data2 = lines
+data1 = "<     >"
+
+data2 =
     "########\n\
     \#<     #\n\
     \#  ##  #\n\
@@ -11,7 +11,7 @@ data2 = lines
     \#     >#\n\
     \########"
 
-data3 = lines
+data3 =
     "#######\n\
     \#<    #\n\
     \##### #\n\
@@ -22,27 +22,19 @@ data3 = lines
     \#   #>#\n\
     \#######"
 
-data4 = lines "<   #   >"
+data4 = "<   #   >"
 
-data5 = lines
+data5 =
     "########\n\
     \#<     #\n\
     \#     ##\n\
     \#    #>#\n\
     \########"
 
-data6 = lines
+data6 =
     "#< #  #\n\
     \#  #  #\n\
     \#  # >#"
--}
-
-data1="<     >"
-data2="########\n#<     #\n#  ##  #\n#  ##  #\n#     >#\n########"
-data3="#######\n#<    #\n##### #\n#     #\n# #####\n# #   #\n# # # #\n#   #>#\n#######"
-data4="<   #   >"
-data5="########\n#<     #\n#     ##\n#    #>#\n########"
-data6="#< #  #\n#  #  #\n#  # >#"
 
 
 startPoint = '<'
