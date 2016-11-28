@@ -59,7 +59,7 @@ getEnableCheckPoint datas (cX, cY) checkedList = do
     return (sumX, sumY)
 
 findStartPoint datas num
-    | index /= Nothing = Just (num, n)
+    | index /= Nothing = Just (n, num)
     | length datas <= num = Nothing
     | otherwise = findStartPoint datas (num + 1)
     where
