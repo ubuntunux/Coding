@@ -34,7 +34,6 @@ class Conversioner:
                 print("%s cannot conversion to %s" % (srcUnitInst.__class__.__name__, dstUnit.__name__))
                 return
         print(">> %s => %s" % (srcUnitInst, dstUnitInst))
-        print("")
     
     def doConversion(self, srcUnitInst, dstUnit, searchList=None):        
         if searchList == None:
@@ -49,16 +48,14 @@ class Conversioner:
                     searchList.append(curUnit)
                     if curUnit == dstUnit:
                         dstUnitInst = dstUnit(srcUnitInst.value * self.conversionMap[srcUnit][dstUnit])
-                        print("find %s to %s" % (srcUnitInst, dstUnitInst))
                         return dstUnitInst
                     curUnitInst = curUnit(srcUnitInst.value * self.conversionMap[srcUnit][curUnit])
-                    print("convert %s to %s" % (srcUnitInst, curUnitInst))
                     findUnitInst = self.doConversion(curUnitInst, dstUnit, searchList)
                     if findUnitInst:                        
                         return findUnitInst
-        print("Faild %s to %s" % (srcUnitInst, dstUnit.__name__))
         return None
-        
+
+# Set unit conversion datas.
 conversioner = Conversioner()
 conversioner.setConversionRatio(Inch, 1.0, Cm, 2.54)
 conversioner.setConversionRatio(Cm, 1.0, Mm, 10.0)
@@ -67,6 +64,7 @@ conversioner.setConversionRatio(Inch, 1.0, Px, 96.0)
 conversioner.setConversionRatio(Pt, 1.0, Dxa, 20.0)
 conversioner.setConversionRatio(Dxa, 1.0, Emu, 635.0)
 
+# Run unit conversion test.
 conversioner.conversion(Cm(10), Cm)
 conversioner.conversion(Inch(10), Mm)
 conversioner.conversion(Px(1024), Pt)
