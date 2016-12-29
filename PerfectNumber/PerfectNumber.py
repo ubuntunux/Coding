@@ -6,9 +6,7 @@ def isPerfectNumber(n):
         if n % i == 0:
             divisors.append(i)
             divisors.append(int(n / i))
-    if sum(divisors) == n:
-        return True
-    return False
+    return sum(divisors) == n
 
 def main():
     perfectNumbers = []
